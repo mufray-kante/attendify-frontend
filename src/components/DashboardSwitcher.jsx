@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function DashboardSwitcher() {
   const switchTo = (role) => {
     localStorage.setItem('role', role);
@@ -5,10 +7,48 @@ export default function DashboardSwitcher() {
   };
 
   return (
-    <div className='dashboard-switcher'>
-      <button onClick={() => switchTo('admin')}>Admin</button>
-      <button onClick={() => switchTo('lecturer')}>Lecturer</button>
-      <button onClick={() => switchTo('student')}>Student</button>
+    <div className='dashboard-switcher' style={{ display: 'flex', gap: '10px' }}>
+      <button
+        onClick={() => switchTo('admin')}
+        style={{
+          padding: '8px 16px',
+          backgroundColor: '#2563EB',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '6px',
+          cursor: 'pointer',
+        }}
+      >
+        Admin
+      </button>
+
+      <button
+        onClick={() => switchTo('lecturer')}
+        style={{
+          padding: '8px 16px',
+          backgroundColor: '#9333EA',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '6px',
+          cursor: 'pointer',
+        }}
+      >
+        Lecturer
+      </button>
+
+      <button
+        onClick={() => switchTo('student')}
+        style={{
+          padding: '8px 16px',
+          backgroundColor: '#14B8A6',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '6px',
+          cursor: 'pointer',
+        }}
+      >
+        Student
+      </button>
     </div>
   );
 }
