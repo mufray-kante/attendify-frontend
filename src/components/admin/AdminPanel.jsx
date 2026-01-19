@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import QRCode from "qrcode.react";
+<QRCodeCanvas value={sessionToken} size={150} />
+import { QRCodeCanvas } from "qrcode.react"; // or QRCodeSVG if you prefer SVG
+
 
 const AdminPanel = () => {
     const [lecturer, setLecturer] = useState({ name: "", email: "", password: "" });
