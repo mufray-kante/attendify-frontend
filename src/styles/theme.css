@@ -2,13 +2,20 @@
   --primary: #2563eb;
   --secondary: #9333ea;
   --accent: #14b8a6;
-  --dark: #0f172a;
-  --light: #f8fafc;
+  --bg-light: #f8fafc;
+  --bg-dark: #0f172a;
+  --text-dark: #0f172a;
+  --text-light: #ffffff;
 }
 
 body {
   margin: 0;
-  font-family: Inter, system-ui, sans-serif;
-  background: linear-gradient(135deg, var(--light), #e5e7eb);
-  color: var(--dark);
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 600;
 }
