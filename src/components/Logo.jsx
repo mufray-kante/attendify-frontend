@@ -5,7 +5,7 @@ const Logo = ({ width = 150 }) => (
     <img
       src="/src/assets/attendify-logo.png"
       alt="Attendify Logo"
-      className="mr-2"
+      className="mr-2 h-12"
       width={width}
     />
     <span className="text-2xl font-bold text-blue-600">Attendify</span>
