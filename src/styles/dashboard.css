@@ -1,0 +1,31 @@
+.dashboard {
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.dashboard header {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+.dashboard-switcher {
+  display: flex;
+  gap: 1rem;
+}
+
+.dashboard-switcher button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.dashboard-switcher button:hover {
+  background: var(--secondary);
+  transform: translateY(-2px);
+}
