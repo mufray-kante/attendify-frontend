@@ -1,9 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function DashboardSwitcher() {
+  const navigate = useNavigate();
+
   const switchTo = (role) => {
     localStorage.setItem('role', role);
-    window.location.href = `/${role}/dashboard`; // <-- valid URL string
+
+    if (role === 'admin') navigate('/admin/dashboard');
+    else if (role === 'lecturer') navigate('/lecturer/dashboard');
+    else if (role === 'student') navigate('/student/dashboard');
   };
 
   return (
