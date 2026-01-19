@@ -1,0 +1,33 @@
+/* Final production styles */
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: linear-gradient(135deg, #f8fafc, #e5e7eb);
+  color: #0f172a;
+}
+
+button {
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+"
+
+# --------- index.html ----------
+Set-Content index.html @"
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Attendify Frontend</title>
+    <link rel='stylesheet' href='index.css' />
+  </head>
+  <body>
+    <div id='root'></div>
+    <script type='module' src='/src/main.jsx'></script>
+  </body>
+</html>
