@@ -7,7 +7,7 @@ export default function DashboardSwitcher() {
   };
 
   return (
-    <div className='dashboard-switcher' style={{ display: 'flex', gap: '10px' }}>
+    <div style={{ display: 'flex', gap: '12px' }}>
       <button
         onClick={() => switchTo('admin')}
         style={{
@@ -21,7 +21,6 @@ export default function DashboardSwitcher() {
       >
         Admin
       </button>
-
       <button
         onClick={() => switchTo('lecturer')}
         style={{
@@ -35,7 +34,6 @@ export default function DashboardSwitcher() {
       >
         Lecturer
       </button>
-
       <button
         onClick={() => switchTo('student')}
         style={{
