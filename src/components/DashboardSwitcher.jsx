@@ -3,7 +3,7 @@ import React from 'react';
 export default function DashboardSwitcher() {
   const switchTo = (role) => {
     localStorage.setItem('role', role);
-    window.location.href = //dashboard;
+    window.location.href = `/${role}/dashboard`; // <-- valid URL string
   };
 
   return (
