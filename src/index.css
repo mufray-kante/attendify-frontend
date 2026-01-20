@@ -1,3 +1,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ------------------- Custom Styles ------------------- */
+body {
+    @apply bg-gray-50 text-gray-800 font-sans;
+}
+
+header {
+    @apply sticky top-0 z-50 bg-white shadow-md;
+}
+
+footer {
+    @apply bg-secondary text-gray-300;
+}
+
+button,
+a {
+    @apply transition duration-300 ease-in-out;
+}
+
+button:hover,
+a:hover {
+    @apply scale-105;
+}
+
+/* Hero text */
+h1,
+h2,
+h3,
+h4,
+h5 {
+    @apply font-heading;
+}
+
+/* QR Code Card */
+.qr-card {
+    @apply p-6 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center;
+}
+
+/* Admin Panel Forms */
+.admin-form {
+    @apply p-6 bg-white rounded-xl shadow-lg space-y-4;
+}
+
+.admin-form input,
+.admin-form select {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary;
+}
+
+.admin-form button {
+    @apply bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium;
+}
