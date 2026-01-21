@@ -1,22 +1,30 @@
-import axios from 'axios';
+// src/services/api.js
+import axios from "axios";
 
-const API_URL = 'http://localhost:5000/api/v1';
+// Base URL of your deployed backend
+const BASE_URL = "https://attendify-backend-production-cdb4.up.railway.app/api/v1";
 
+// Create an axios instance
 export const api = axios.create({
-  baseURL: API_URL,
-  headers: { 'Content-Type': 'application/json' }
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+  withCredentials: true, // in case your backend uses cookies
 });
 
-let token = null;
-
-export const setToken = (newToken) => {
-  token = newToken;
-  api.defaults.headers.common['Authorization'] = Bearer ;
-};
-
-api.interceptors.request.use((config) => {
-  if (token) {
-    config.headers.Authorization = Bearer ;
+// Optional: add a response interceptor to handle auth errors globally
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (!error.response) {
+      // network error
+      alert("Network error: Unable to connect to server.");
+    } else if (error.response.status === 401) {
+      // unauthorized
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    }
+    return Promise.reject(error);
   }
-  return config;
-});
+);

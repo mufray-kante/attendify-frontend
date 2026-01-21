@@ -1,25 +1,24 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import Login from "./pages/Login";
+
 import AdminDashboard from "./pages/AdminDashboard";
 import LecturerDashboard from "./pages/LecturerDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
-import LoginPage from "./pages/LoginPage";
-
-import "./styles/theme.css";
-import "./styles/dashboard.css";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Default redirect */}
+
+        {/* ENTRY POINT */}
         <Route path="/" element={<Navigate to="/login" replace />} />
 
-        {/* Login */}
-        <Route path="/login" element={<LoginPage />} />
+        {/* LOGIN */}
+        <Route path="/login" element={<Login />} />
 
-        {/* Dashboards */}
+        {/* ADMIN */}
         <Route
           path="/admin/dashboard"
           element={
@@ -28,6 +27,8 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* LECTURER */}
         <Route
           path="/lecturer/dashboard"
           element={
@@ -36,6 +37,8 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* STUDENT */}
         <Route
           path="/student/dashboard"
           element={
@@ -45,8 +48,9 @@ export default function App() {
           }
         />
 
-        {/* Catch-all */}
-        <Route path="*" element={<div>404 - Page not found</div>} />
+        {/* FALLBACK */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
+
       </Routes>
     </BrowserRouter>
   );

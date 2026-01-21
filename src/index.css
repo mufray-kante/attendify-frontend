@@ -2,53 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ------------------- Custom Styles ------------------- */
-body {
-    @apply bg-gray-50 text-gray-800 font-sans;
+/* ------------------- Base Layer ------------------- */
+@layer base {
+    body {
+        @apply bg-gray-50 text-gray-800 font-sans antialiased;
+    }
+
+    h1 {
+        @apply text-4xl md:text-5xl font-bold text-gray-900;
+    }
+
+    h2 {
+        @apply text-3xl font-bold text-gray-900;
+    }
+
+    h3 {
+        @apply text-xl font-semibold text-gray-900;
+    }
+
+    a {
+        @apply text-blue-600 hover:text-blue-700;
+    }
 }
 
+/* ------------------- Layout ------------------- */
 header {
     @apply sticky top-0 z-50 bg-white shadow-md;
 }
 
 footer {
-    @apply bg-secondary text-gray-300;
+    @apply bg-blue-900 text-gray-300;
 }
 
-button,
-a {
-    @apply transition duration-300 ease-in-out;
+/* ------------------- Buttons ------------------- */
+.btn-primary {
+    @apply bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition;
 }
 
-button:hover,
-a:hover {
-    @apply scale-105;
+.btn-secondary {
+    @apply border border-gray-300 px-6 py-3 rounded-lg font-medium hover:border-blue-600 hover:text-blue-600 transition;
 }
 
-/* Hero text */
-h1,
-h2,
-h3,
-h4,
-h5 {
-    @apply font-heading;
+/* ------------------- Cards ------------------- */
+.card {
+    @apply bg-white rounded-2xl shadow-xl p-6;
 }
 
-/* QR Code Card */
-.qr-card {
-    @apply p-6 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center;
+.card-soft {
+    @apply bg-white rounded-xl shadow-md p-5;
 }
 
-/* Admin Panel Forms */
+/* ------------------- Forms ------------------- */
+.form-container {
+    @apply bg-white rounded-2xl shadow-xl p-10;
+}
+
+.form-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+/* ------------------- Admin Panel ------------------- */
 .admin-form {
     @apply p-6 bg-white rounded-xl shadow-lg space-y-4;
 }
 
 .admin-form input,
 .admin-form select {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary;
+    @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
 
 .admin-form button {
-    @apply bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium;
+    @apply bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium;
+}
+
+/* ------------------- QR Code ------------------- */
+.qr-card {
+    @apply p-6 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center;
+}
+
+/* ------------------- Animations ------------------- */
+.scale-hover {
+    @apply transition transform duration-300 hover:scale-105;
 }
