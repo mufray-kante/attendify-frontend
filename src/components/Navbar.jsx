@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/Dashboard.css"; // CSS for dashboard styling
 
 export default function Navbar({ role }) {
   const navigate = useNavigate();
@@ -12,17 +13,13 @@ export default function Navbar({ role }) {
   };
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50 px-6 py-3 flex items-center justify-between">
-      <div className="text-xl font-bold text-blue-600">
+    <header className="dash-navbar">
+      <div className="dash-logo">
         Attendify {role?.charAt(0).toUpperCase() + role?.slice(1)}
       </div>
-
-      <div className="flex items-center space-x-4">
-        <span className="text-gray-700 font-medium">{user?.fullName}</span>
-        <button
-          onClick={handleLogout}
-          className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
-        >
+      <div className="dash-user">
+        <span>{user?.fullName}</span>
+        <button className="dash-logout" onClick={handleLogout}>
           Logout
         </button>
       </div>
