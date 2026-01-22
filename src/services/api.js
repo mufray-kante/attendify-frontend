@@ -1,16 +1,17 @@
 import axios from "axios";
 
-// VITE environment variable
-const BASE_URL = import.meta.env.VITE_API_URL;
+// MUST match the .env variable name exactly
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true, // keep this for cookies / auth
 });
 
-// Optional: global response interceptor for network/auth errors
+// Global response interceptor
 api.interceptors.response.use(
   (response) => response,
   (error) => {
