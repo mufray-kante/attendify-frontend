@@ -1,8 +1,7 @@
-// src/pages/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
-import "../styles/Login.css"; // <- make sure your CSS is here
+import "../styles/Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -22,12 +21,12 @@ export default function Login() {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      // Navigate based on role
       const role = res.data.user.role;
       if (role === "admin") navigate("/admin");
       else if (role === "lecturer") navigate("/lecturer");
       else navigate("/student");
     } catch (err) {
+      console.error(err);
       setError(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
@@ -44,16 +43,7 @@ export default function Login() {
         <p className="subtitle">Secure Attendance Management</p>
 
         {error && (
-          <div
-            style={{
-              background: "#fee2e2",
-              color: "#b91c1c",
-              padding: "10px",
-              borderRadius: "8px",
-              marginBottom: "15px",
-              fontSize: "14px",
-            }}
-          >
+          <div className="error-message">
             {error}
           </div>
         )}

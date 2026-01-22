@@ -1,16 +1,16 @@
 import axios from "axios";
 
-const BASE_URL = "https://attendify-backend-production-cdb4.up.railway.app/api/v1";
+// VITE environment variable
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // optional if cookies used
 });
 
-// Optional: global response interceptor
+// Optional: global response interceptor for network/auth errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
