@@ -1,15 +1,23 @@
 import React from "react";
+import "../styles/Dashboard.css"; // ✅ REQUIRED & case-sensitive
 
-export default function Navbar({ user, onLogout }) {
+const Navbar = ({ user, onLogout }) => {
   return (
-    <div className="dash-navbar">
+    <nav className="dash-navbar">
       <div className="dash-logo">Attendify</div>
+
       <div className="dash-user">
-        <span>{user?.fullName}</span>
-        <button className="dash-logout" onClick={onLogout}>
+        <span>{user?.fullName || "User"}</span>
+        <button
+          type="button"
+          className="dash-logout"
+          onClick={onLogout}
+        >
           Logout
         </button>
       </div>
-    </div>
+    </nav>
   );
-}
+};
+
+export default Navbar;
