@@ -1,5 +1,6 @@
 import React from "react";
-import "../styles/Dashboard.css"; // ✅ REQUIRED & case-sensitive
+import "../pages/styles/Dashboard.css";
+
 
 const Navbar = ({ user, onLogout }) => {
   return (
