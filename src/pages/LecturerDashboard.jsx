@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import "../styles/Dashboard.css"; // ✅ correct place
+import "./styles/Dashboard.css"; // ✅ correct place
 
 export default function LecturerDashboard() {
   const user = JSON.parse(localStorage.getItem("user"));
