@@ -1,28 +1,58 @@
-import axios from 'axios';
-import QRCode from 'qrcode';
+import api from "../services/api";
+import QRCode from "qrcode";
 
 export const loginAndGenerateQR = async (email, password) => {
     try {
-        const res = await axios.post(
-            import.meta.env.VITE_API_URL + '/api/v1/auth/login',
-            { email, password },
-            { withCredentials: true }
-        );
+        const res = await api.post("/auth/login", { email, password });
 
-        // Save token and user info
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
+        // Save auth info
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
 
-        // Generate QR code from user ID
+        // Generate QR from user ID
         const qrData = res.data.user.id;
         const qrCodeUrl = await QRCode.toDataURL(qrData);
 
-        return { success: true, message: res.data.message, qrCodeUrl };
+        return {
+            success: true,
+            message: res.data.message || "Login successful",
+            qrCodeUrl,
+        };
+
     } catch (err) {
         if (err.response) {
-            return { success: false, message: err.response.data.message };
-        } else {
-            return { success: false, message: 'Network error. Please try again later.' };
+            const status = err.response.status;
+            const backendMessage = err.response.data?.message;
+
+            if (status === 429) {
+                return {
+                    success: false,
+                    type: "warning",
+                    message:
+                        backendMessage ||
+                        "Too many login attempts. Please wait a few minutes and try again.",
+                };
+            }
+
+            if (status === 401) {
+                return {
+                    success: false,
+                    type: "error",
+                    message: "Invalid email or password.",
+                };
+            }
+
+            return {
+                success: false,
+                type: "error",
+                message: backendMessage || "Login failed. Please try again.",
+            };
         }
+
+        return {
+            success: false,
+            type: "error",
+            message: "Cannot connect to server. Check your internet connection.",
+        };
     }
 };
