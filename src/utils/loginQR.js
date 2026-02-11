@@ -1,25 +1,33 @@
-import api from "../services/api";
+import api from "../services/api"; // Axios instance pointing to your backend
 import QRCode from "qrcode";
 
+/**
+ * Logs in a user, saves auth info, generates QR code, and returns role info.
+ * @param {string} email
+ * @param {string} password
+ * @returns {Object} { success, message, qrCodeUrl, role }
+ */
 export const loginAndGenerateQR = async (email, password) => {
     try {
         const res = await api.post("/auth/login", { email, password });
 
-        // Save auth info
+        // Save auth info in localStorage
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
 
-        // Generate QR from user ID
+        // Generate QR code from user ID
         const qrData = res.data.user.id;
         const qrCodeUrl = await QRCode.toDataURL(qrData);
 
+        // Return success, QR code, and role for redirects
         return {
             success: true,
             message: res.data.message || "Login successful",
             qrCodeUrl,
+            role: res.data.user.role,
         };
-
     } catch (err) {
+        // Handle backend responses
         if (err.response) {
             const status = err.response.status;
             const backendMessage = err.response.data?.message;
@@ -49,6 +57,7 @@ export const loginAndGenerateQR = async (email, password) => {
             };
         }
 
+        // Handle network / server errors
         return {
             success: false,
             type: "error",
