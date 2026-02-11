@@ -21,26 +21,26 @@
     }
 
     a {
-        @apply text-blue-600 hover:text-blue-700;
+        @apply text-yellow-600 hover:text-yellow-700 transition;
     }
 }
 
 /* ------------------- Layout ------------------- */
 header {
-    @apply sticky top-0 z-50 bg-white shadow-md;
+    @apply sticky top-0 z-50 bg-white shadow-md border-b-2 border-yellow-500;
 }
 
 footer {
-    @apply bg-blue-900 text-gray-300;
+    @apply bg-yellow-700 text-white py-4 text-center;
 }
 
 /* ------------------- Buttons ------------------- */
 .btn-primary {
-    @apply bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition;
+    @apply bg-yellow-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transition;
 }
 
 .btn-secondary {
-    @apply border border-gray-300 px-6 py-3 rounded-lg font-medium hover:border-blue-600 hover:text-blue-600 transition;
+    @apply border border-gray-300 px-6 py-3 rounded-lg font-medium hover:border-yellow-500 hover:text-yellow-500 transition;
 }
 
 /* ------------------- Cards ------------------- */
@@ -58,7 +58,7 @@ footer {
 }
 
 .form-input {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500;
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition;
 }
 
 .form-label {
@@ -72,11 +72,11 @@ footer {
 
 .admin-form input,
 .admin-form select {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
+    @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 transition;
 }
 
 .admin-form button {
-    @apply bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium;
+    @apply bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 font-medium transition;
 }
 
 /* ------------------- QR Code ------------------- */
