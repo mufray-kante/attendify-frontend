@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { loginAndGenerateQR } from "../utils/loginQR";
 
 export default function Login() {
@@ -9,20 +8,6 @@ export default function Login() {
   const [messageType, setMessageType] = useState(""); // success | error | warning
   const [qrUrl, setQrUrl] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Automatically clear messages & QR after 5 seconds
-    if (message || qrUrl) {
-      const timer = setTimeout(() => {
-        setMessage("");
-        setMessageType("");
-        setQrUrl("");
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [message, qrUrl]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,26 +23,16 @@ export default function Login() {
         setMessageType("success");
         setQrUrl(result.qrCodeUrl);
 
-        // Role-based redirect
-        switch (result.role?.toUpperCase()) {
-          case "ADMIN":
-            navigate("/admin-dashboard");
-            break;
-          case "LECTURER":
-            navigate("/lecturer-dashboard");
-            break;
-          case "STUDENT":
-            navigate("/student-dashboard");
-            break;
-          default:
-            setMessage("Unknown user role");
-            setMessageType("error");
-        }
+        // Example: redirect based on role
+        const role = result.user?.role;
+        if (role === "ADMIN") window.location.href = "/admin-dashboard";
+        else if (role === "LECTURER") window.location.href = "/lecturer-dashboard";
+        else window.location.href = "/student-dashboard";
       } else {
         setMessage(result.message || "Login failed");
         setMessageType(result.type || "error");
       }
-    } catch (err) {
+    } catch {
       setMessage("Unable to connect to server. Please try again.");
       setMessageType("error");
     } finally {
@@ -65,66 +40,31 @@ export default function Login() {
     }
   };
 
+  const getMessageColor = () => {
+    if (messageType === "success") return "text-green-600";
+    if (messageType === "warning") return "text-yellow-500";
+    return "text-red-600";
+  };
+
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#0B2545", // dark blue
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <div
-        style={{
-          width: "400px",
-          backgroundColor: "#1E3A5F",
-          padding: "40px",
-          borderRadius: "15px",
-          boxShadow: "0 10px 25px rgba(0,0,0,0.4)",
-          color: "white",
-          textAlign: "center",
-        }}
-      >
-        <h1 style={{ fontSize: "2rem", marginBottom: "20px", color: "#FFD700" }}>
-          University Login
-        </h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Welcome Back</h1>
 
         {message && (
-          <div
-            style={{
-              marginBottom: "15px",
-              padding: "10px",
-              borderRadius: "8px",
-              backgroundColor:
-                messageType === "success"
-                  ? "#4BB543"
-                  : messageType === "warning"
-                    ? "#FFD700"
-                    : "#FF4C4C",
-              color: messageType === "warning" ? "#0B2545" : "white",
-              fontWeight: "bold",
-            }}
-          >
+          <div className={`${getMessageColor()} mb-4 text-center font-medium`}>
             {message}
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{
-              width: "100%",
-              padding: "12px",
-              marginBottom: "15px",
-              borderRadius: "8px",
-              border: "none",
-            }}
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none"
           />
 
           <input
@@ -133,47 +73,22 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{
-              width: "100%",
-              padding: "12px",
-              marginBottom: "20px",
-              borderRadius: "8px",
-              border: "none",
-            }}
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none"
           />
 
           <button
             type="submit"
             disabled={loading}
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "none",
-              backgroundColor: "#FFD700", // gold
-              color: "#0B2545",
-              fontWeight: "bold",
-              cursor: "pointer",
-              transition: "0.3s",
-            }}
-            onMouseOver={(e) => (e.currentTarget.style.opacity = 0.8)}
-            onMouseOut={(e) => (e.currentTarget.style.opacity = 1)}
+            className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 rounded-lg transition-colors duration-200"
           >
             {loading ? "Signing in..." : "Login"}
           </button>
         </form>
 
         {qrUrl && (
-          <img
-            src={qrUrl}
-            alt="User QR code"
-            style={{
-              marginTop: "25px",
-              maxWidth: "180px",
-              borderRadius: "10px",
-              border: "2px solid #FFD700",
-            }}
-          />
+          <div className="mt-6 text-center">
+            <img src={qrUrl} alt="User QR code" className="mx-auto w-40 h-40" />
+          </div>
         )}
       </div>
     </div>
