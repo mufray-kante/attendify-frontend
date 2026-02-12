@@ -1,36 +1,46 @@
-import api from "../services/api"; // Axios instance pointing to your backend
+import api from "../services/api";
 import QRCode from "qrcode";
 
 /**
- * Logs in a user, saves auth info, generates QR code, and returns role info.
+ * Login user and generate QR
  * @param {string} email
  * @param {string} password
- * @returns {Object} { success, message, qrCodeUrl, role }
+ * @returns {Promise<{success:boolean, message:string, qrCodeUrl?:string, user?:object, type?:string}>}
  */
 export const loginAndGenerateQR = async (email, password) => {
     try {
-        const res = await api.post("/auth/login", { email, password });
+        const response = await api.post("/auth/login", { email, password });
 
-        // Save auth info in localStorage
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("user", JSON.stringify(res.data.user));
+        const { token, user, message } = response.data;
 
-        // Generate QR code from user ID
-        const qrData = res.data.user.id;
-        const qrCodeUrl = await QRCode.toDataURL(qrData);
+        if (!token || !user) {
+            return {
+                success: false,
+                type: "error",
+                message: "Invalid server response."
+            };
+        }
 
-        // Return success, QR code, and role for redirects
+        // Persist auth safely
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+
+        // Generate QR from unique identifier
+        const qrPayload = `${user.id}|${user.role}`;
+        const qrCodeUrl = await QRCode.toDataURL(qrPayload);
+
         return {
             success: true,
-            message: res.data.message || "Login successful",
+            message: message || "Login successful",
             qrCodeUrl,
-            role: res.data.user.role,
+            user
         };
-    } catch (err) {
-        // Handle backend responses
-        if (err.response) {
-            const status = err.response.status;
-            const backendMessage = err.response.data?.message;
+
+    } catch (error) {
+
+        if (error.response) {
+            const status = error.response.status;
+            const backendMessage = error.response.data?.message;
 
             if (status === 429) {
                 return {
@@ -38,7 +48,7 @@ export const loginAndGenerateQR = async (email, password) => {
                     type: "warning",
                     message:
                         backendMessage ||
-                        "Too many login attempts. Please wait a few minutes and try again.",
+                        "Too many login attempts. Please wait before trying again."
                 };
             }
 
@@ -46,22 +56,21 @@ export const loginAndGenerateQR = async (email, password) => {
                 return {
                     success: false,
                     type: "error",
-                    message: "Invalid email or password.",
+                    message: "Invalid email or password."
                 };
             }
 
             return {
                 success: false,
                 type: "error",
-                message: backendMessage || "Login failed. Please try again.",
+                message: backendMessage || "Login failed."
             };
         }
 
-        // Handle network / server errors
         return {
             success: false,
             type: "error",
-            message: "Cannot connect to server. Check your internet connection.",
+            message: "Cannot connect to server. Check your connection."
         };
     }
 };
